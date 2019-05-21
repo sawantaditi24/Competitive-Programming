@@ -115,7 +115,84 @@ Node *deleteAt(int pos)
     free(t1);
     return root;
 }
+//Deletion ends
+//////////////////////////
 
+//Length of LinkedList
+//1. Iterative
+int lengthIter()
+{
+    int count = 0;
+    Node *t = root;
+    while(t)
+    {
+        t= t -> next;
+        count++;
+    }
+    return count;
+}
+
+//2. Recursive
+int lengthRec(Node *node)
+{
+    if(!node)
+        return 0;
+    return (1+ lengthRec(node->next));
+}
+
+//Length ends here
+/////////////////////////////////
+
+//Searching element in LL
+//1. Iterative
+
+int searchIter(int key)
+{
+    //return posi for key in LL, else return -1
+    int pos = 1;
+    Node *t = root;
+    while(t && t->data != key)
+    {
+        t = t->next;
+        pos++;
+    }
+    if(!t)
+    {
+        return -1;
+    }
+    
+    return pos;
+}
+
+//2. Recursive
+
+int searchRecur(Node *node, int key, int &pos)
+{
+    if(!node)
+        return -1;
+    if(node->data == key)
+        return (pos);
+    pos++;
+    return (node->next, key, pos);
+}
+//Search ends here
+///////////////////////////////////////
+
+//Nth node in a LL
+//1. Nth from front
+int nthFront(int n)
+{
+    int count = 1;
+    Node *temp = root;
+    while(count < n && temp)
+    {
+        temp = temp->next;
+        count++;
+    }
+    if(!temp)
+        return 0;
+    return temp->data;
+}
 int main()
 {
     //root = NULL;
@@ -142,6 +219,24 @@ int main()
         cout<<t->data<<" ";
         t = t -> next;
     }
+    cout<<endl;
+    cout<<"Length through Iteration = "<<lengthIter()<<endl;
+    cout<<"Length through Recursion = "<<lengthRec(root)<<endl;
+    cout<<"5 is located at position = "<<searchIter(5)<<endl;
+    int pos = 1;
+    cout<<"5 is located at position = "<<searchRecur(root, 5, pos)<<endl;
+    root = append(6);
+    root = append(7);
+    root = append(8);
+    t = root;
+    while(t)
+    {
+        cout<<t->data<<" ";
+        t = t -> next;
+    }
+    cout<<endl;
+    cout<<"4th node from front is = "<<nthFront(4)<<endl;
+    
     return 0;
     
 }
