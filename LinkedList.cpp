@@ -166,14 +166,14 @@ int searchIter(int key)
 
 //2. Recursive
 
-int searchRecur(Node *node, int key, int &pos)
+int searchRecur(Node *node, int key, int pos)
 {
     if(!node)
         return -1;
     if(node->data == key)
         return (pos);
     pos++;
-    return (node->next, key, pos);
+    return searchRecur(node->next, key, pos);
 }
 //Search ends here
 ///////////////////////////////////////
@@ -193,9 +193,156 @@ int nthFront(int n)
         return 0;
     return temp->data;
 }
+
+//2. Nth from end
+
+int nthEnd(int n)
+{
+    int l = lengthIter();
+    return nthFront(l - n + 1);
+}
+
+//nth ends here
+/////////////////////
+
+//Middle of LL
+int mid()
+{
+    Node *t1 = root, *t2 = root;
+    
+    while(t1 && t2 && t1->next)
+    {
+        t1 = t1->next->next;
+        t2 = t2->next;
+    }
+    return t2->data;
+}
+///////////
+
+//Frequency of occurence of key
+int fre(int key)
+{
+    int count  = 0;
+    Node *t = root;
+    if(root)
+    {
+        while(t)
+        {
+            if(t->data == key)
+                count++;
+            t = t->next;
+        }
+    }
+    return count;
+}
+//////////////////
+
+//Detecting Loop in LL
+
+bool loopCheckFloyd()
+{
+    Node *t1 = root, *t2 = root;
+    while(t1 && t2 && t1->next)
+    {
+        if(t1 == t2)
+            return true;
+    }
+    return false;
+}
+
+bool checkLoopHash()
+{
+    set<Node*>s;
+    Node *h = root;
+    while(h)
+    {
+        if(s.find(h) != s.end())
+            return true;
+        s.insert(h);
+        h = h->next;
+    }
+    return false;
+}
+
+bool checkLoopNode()
+{
+    Node *t = root;//for traversing
+    Node *k = newNode(0);//temp node
+    while(t)
+    {
+        if(!t->next)
+            return false;
+        if(t->next == k)
+            return true;
+        Node *nex = t->next;
+        t->next = k;
+        t = nex;
+    }
+    return false;
+}
+/////////////////////////
+
+//Length of loop in LL
+
+int countNodes(Node *t)
+{
+    int len = 1;
+    Node *temp = t;
+    while(temp->next != t)
+    {
+        len++;
+        temp = temp->next;
+    }
+    return len;
+}
+
+int detectLengthOfLoop()
+{
+    Node *t1 =root, *t2 = root;
+    while(t1 && t2 && t1->next)
+    {
+        t1 = t1->next->next;
+        t2 = t2->next;
+        
+        if(t1 == t2)
+            return countNodes(t2);
+    }
+    return 0;
+}
+////////////////////
+
+//Check if LL is palindrome
+bool isPal()
+{
+    Node *t1 = root,*t2 = root;
+    stack<int> s;
+    int i;
+    bool isPalindrome = true;
+    while(t2)
+    {
+        s.push(t2->data);
+        t2 = t2 -> next;
+    }
+
+    while(t1)
+    {
+        i = s.top();
+        s.pop();
+        if(t1->data != i)
+        {
+            isPalindrome = false;
+            break;
+        }
+    }
+
+    return isPalindrome;
+}
+///////////////////////////
+
+
+//Main Method
 int main()
 {
-    //root = NULL;
     root = push(1);
     root = push(2);
     root = append(3);
@@ -209,7 +356,7 @@ int main()
     }
     cout<<endl;
     root = delet(3);
-    //root = append(4);
+    root = append(4);
     root = append(5);
     root = deleteAt(2);
     
@@ -224,10 +371,13 @@ int main()
     cout<<"Length through Recursion = "<<lengthRec(root)<<endl;
     cout<<"5 is located at position = "<<searchIter(5)<<endl;
     int pos = 1;
-    cout<<"5 is located at position = "<<searchRecur(root, 5, pos)<<endl;
+    
     root = append(6);
     root = append(7);
     root = append(8);
+    root = append(8);
+    root = append(8);
+    cout<<"LL: "<<endl;
     t = root;
     while(t)
     {
@@ -235,7 +385,28 @@ int main()
         t = t -> next;
     }
     cout<<endl;
+    cout<<"8 is located at position = "<<searchRecur(root, 8, pos)<<endl;
+    root = append(8);
+    
+    
     cout<<"4th node from front is = "<<nthFront(4)<<endl;
+    cout<<"4th node from end is = "<<nthEnd(4)<<endl;  
+    cout<<"Middle of LL is = "<<mid()<<endl;
+    cout<<"Freq of 8 = "<<fre(8)<<endl;
+    if(loopCheckFloyd())
+        cout<<"Loop exists through Floyd"<<endl;
+    else
+        cout<<"Loop doesn't exist through Floyd"<<endl;
+    if(checkLoopHash())
+        cout<<"Loop exists through Hashing"<<endl;
+    else
+        cout<<"Loop doesn't exist through Hashing"<<endl;
+    cout<<"Length of Loop = "<<detectLengthOfLoop()<<endl;
+    if(isPal())
+        cout<<"LL is a palindrome"<<endl;
+    else
+        cout<<"Not a palindrome"<<endl;
+    
     
     return 0;
     
