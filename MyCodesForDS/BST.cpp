@@ -1,8 +1,8 @@
+//Implementation of BST
+
 #include<bits/stdc++.h>
 using namespace std;
 
-//////////////////////////////////
-//Implementation of BST
 struct Node
 {
     int data;
@@ -37,8 +37,8 @@ Node *insert(Node* root, int data)
     return root;    
 }
 //////////////////
-
-//2. In Order
+//2. Traversals
+//a. In Order
 
 void inOrder(Node* root)
 {
@@ -49,7 +49,34 @@ void inOrder(Node* root)
         inOrder(root->r);
     }
 }
+//b. Pre Order
+
+void preOrder(Node *root)
+{
+    if(root)
+    {
+        cout<<root->data<<" ";
+        preOrder(root->l);
+        preOrder(root->r);
+    }
+}
+
+//c. Post Order
+
+void postOrder(Node *root)
+{
+    if(root)
+    {
+        postOrder(root->l);
+        postOrder(root->r);
+        cout<<root->data<<" ";
+    }
+}
+
+//Traversals done
 ///////////////////////
+
+
 
 //3. Search
 
@@ -114,7 +141,7 @@ Node *delet(Node *node, int key)
     {
         Node *succParent = node->r;
         Node *succ = node->r;
-        while(succ->l && succ)
+        while(succ->l)
         {
             succParent = succ;
             succ = succ->l;
@@ -125,6 +152,22 @@ Node *delet(Node *node, int key)
         return node;
     }
     return node;
+}
+
+//////////////////////////////
+
+//Constructing BST
+
+//1. Construct from PreOder Method 1 
+
+Node * pre1util()
+{
+    
+}
+Node *pre1(int pre[]. int size)
+{
+    int preIndex = 0;
+    return pre1Util(pre[], &preIndex, 0, size - 1, size)
 }
 //Main Method
 int main()
