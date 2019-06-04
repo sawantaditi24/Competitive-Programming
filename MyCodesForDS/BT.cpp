@@ -221,3 +221,44 @@ void printCorner(Node* root)
         cout<<i<<" ";
 }
 
+
+///////////////////////////////////////
+
+//Count number of leaf nodes recursively in BT 
+
+int getLeaf(Node* node)
+{
+    if(!node)
+        return 0;
+    if(!node->l && !node->r)
+        return 1;
+    else
+        return (getLeaf(node->l) + getLeaf(node->r));
+}
+/////////
+
+//Average of levels in BT 
+
+void avg(Node *root)
+{
+    queue<Node*> q;
+    q.push(root);
+    while(!q.empty())
+    {
+        int sum = 0, count = 0;
+        queue<Node*> temp;
+        while(!q.empty())
+        {
+            Node *n = q.front();
+            q.pop();
+            sum += n->val;
+            count++;
+            if(n->l)
+                temp->push(n->l);
+            if(n->r)
+                temp->push(n->r);
+        }
+        q = temp;
+        cout<<sum*1.0/count<<" ";
+    }
+}
