@@ -169,6 +169,25 @@ Node *pre1(int pre[]. int size)
     int preIndex = 0;
     return pre1Util(pre[], &preIndex, 0, size - 1, size)
 }
+
+///////////////
+
+//Lowest Common Ancestor in BST
+
+Node *LCA(Node *root, int n1, int n2)
+{
+    while(root)
+    {
+        if(root->data > n1 && root->data > n2)
+            root = root->left;
+        else if(root->data < n1 && root->data < n2)
+            root = root->right;
+        else
+            break;
+            
+    }
+    return root;
+}
 //Main Method
 int main()
 {
