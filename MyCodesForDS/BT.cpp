@@ -262,3 +262,25 @@ void avg(Node *root)
         cout<<sum*1.0/count<<" ";
     }
 }
+
+//Deleting a BT without recursion
+//Delete is a key word so don't use it as variable or function name
+void delTree(Node *root)
+{
+    if(!root)
+        return;
+    queue<Node *>q;
+    q.push(root);
+    while(!q.empty())
+    {
+        Node *node = q.front();
+        q.pop();
+        if(node->left)
+            q.push(node->left);
+        if(node->right)
+            q.push(node->right);
+        free(node);
+    }
+}
+
+
