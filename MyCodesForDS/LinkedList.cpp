@@ -411,3 +411,31 @@ int main()
     return 0;
     
 }
+
+///////////////////////////////////
+//Swapping pairwise in Linkedlist iteratively by modifying links
+
+Node *SwapPair(Node *head)
+{
+    Node *curr = head;
+    Node *ahead = curr->next;
+    if(!curr || !ahead)
+        return curr;
+    Node *temp, *prev = NULL, *ans = ahead;
+    while(curr && ahead)
+    {
+        temp = curr ->next;
+        curr->next = temp;
+        ahead->next = curr;
+        if(prev)
+            prev->next = ahead;
+        prev = curr;
+        curr = curr->next;
+        if(curr)
+            ahead = curr->next;
+    }
+    return ans;
+}
+///////////////////
+
+
